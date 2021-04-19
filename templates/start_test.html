@@ -2,7 +2,18 @@
 
 {% block content %}
 
-<h2>Привет, {{ username }}!</h2>
-Начинаем тестирование.
-
+  <form action="start" method="POST" novalidate>
+    <h2>Привет, {{ username }}!</h2>
+    <h3>В каждой паре утверждений выберете то, с которым вы больше согласны. Номера выбранных утверждений
+      последовательно запишите. Выбранной вами комбинации цифр соответствует определенный тип личности.</h3>
+    {{ form.hidden_tag() }}
+    <input type="hidden" name="id_test" value=" {{ id_test }} ">
+    <input type="hidden" name="username" value=" {{ username }} ">
+    <p>
+        {{ form.choice_switcher() }}
+    </p>
+    <p>
+        {{ form.submit(type="submit", class="btn btn-primary") }}
+    </p>
+  </form>
 {% endblock %}
