@@ -4,6 +4,8 @@
   <form action="" method="POST" novalidate>
     <h2>Результат тестирования {{ dct_res['username'] }}</h2>
     Ваш психотип: {{ dct_res['type'] }} <br>
-    Соционическийтип: {{ dct_res['soc_type'] }}
+    Соционический тип: {{ dct_res['soc_type'] }} <br>
+    Люди вашего типа: {{ dct_res['representatives'] }} <br>
+    Ваши профессиональные возможности: {{ dct_res['prof'] }}
   </form>
 {% endblock %}

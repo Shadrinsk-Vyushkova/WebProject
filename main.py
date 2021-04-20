@@ -58,6 +58,8 @@ def login():
         dct['username'] = name
         dct['type'] = result.type
         dct['soc_type'] = result.soc_type
+        dct['representatives'] = result.representatives
+        dct['prof'] = result.prof
         return render_template('final.html', title="Результат тестирования", form=resForm, dct_res=dct)
 
 
@@ -79,6 +81,7 @@ class TestForm(FlaskForm):
 class ResForm(FlaskForm):
     type = StringField()
     soc_type = TextField()
+    representatives = StringField()
 
 
 if __name__ == '__main__':

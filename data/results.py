@@ -9,3 +9,5 @@ class Result(SqlAlchemyBase):
     result = sqlalchemy.Column(sqlalchemy.String)
     type = sqlalchemy.Column(sqlalchemy.String)
     soc_type = sqlalchemy.Column(sqlalchemy.String)
+    representatives = sqlalchemy.Column(sqlalchemy.String)
+    prof = sqlalchemy.Column(sqlalchemy.String)
