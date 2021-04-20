@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <form action="" method="POST" novalidate>
+    <h2>Результат тестирования {{ dct_res['username'] }}</h2>
+    Ваш психотип: {{ dct_res['type'] }} <br>
+    Соционическийтип: {{ dct_res['soc_type'] }}
+  </form>
+{% endblock %}

@@ -3,6 +3,8 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, RadioField, validators, TextField
 from data import db_session
 from data.tests import Test
+from data.results import Result
+
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'WebProject_secret_key'
@@ -11,6 +13,8 @@ db_sess = db_session.create_session()
 
 lst_test = []
 res = []
+dct = dict()
+StrRes = ""
 
 
 @app.route('/')
@@ -24,27 +28,37 @@ def login():
     if request.method == 'POST':
         name = request.form.get('username')
         test_id = request.form.get('id_test')
+        choice = request.form.get('choice_switcher')
         if test_id is None:
             test_id = 0
+            res.clear()
         else:
-            res.append(str(request.form.get('choice_switcher')))
-            test_id = int(test_id) + 1
-
-    print(test_id)
-    print(res)
-
+            if choice is not None:
+                res.append(str(choice))
+                test_id = int(test_id) + 1
+            else:
+                test_id = int(test_id)
     if test_id < 4:
         test = db_sess.query(Test).filter(Test.id == test_id).first()
         lst_test.clear()
         lst_test.append((str(test_id * 2 + 1), test.var1))
         lst_test.append((str(test_id * 2 + 2), test.var2))
         testform = TestForm()
-        return render_template('start_test.html', title="Начало тестирования", username=name, form=testform, id_test=test_id)
+        dct.clear()
+        dct['username'] = name
+        dct['id_test'] = test_id
+        return render_template('start_test.html', title="Начало тестирования", form=testform, dct_test=dct)
     else:
-        return None
-        # Написать выборку из базы результата по ответам
-        # resForm = ResForm()
-        # return render_template('final.html', title="Начало тестирования", username=name, form=resForm, result=res)
+        StrRes = ""
+        StrRes = "".join(res)
+        print(StrRes)
+        result = db_sess.query(Result).filter(Result.result == StrRes).first()
+        resForm = ResForm()
+        dct.clear()
+        dct['username'] = name
+        dct['type'] = result.type
+        dct['soc_type'] = result.soc_type
+        return render_template('final.html', title="Результат тестирования", form=resForm, dct_res=dct)
 
 
 class LoginForm(FlaskForm):
@@ -63,7 +77,8 @@ class TestForm(FlaskForm):
 
 
 class ResForm(FlaskForm):
-    res = TextField()
+    type = StringField()
+    soc_type = TextField()
 
 
 if __name__ == '__main__':
