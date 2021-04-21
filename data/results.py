@@ -11,3 +11,4 @@ class Result(SqlAlchemyBase):
     soc_type = sqlalchemy.Column(sqlalchemy.String)
     representatives = sqlalchemy.Column(sqlalchemy.String)
     prof = sqlalchemy.Column(sqlalchemy.String)
+    profession = sqlalchemy.Column(sqlalchemy.String)
